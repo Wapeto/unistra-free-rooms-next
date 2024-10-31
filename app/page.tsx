@@ -101,7 +101,7 @@ export default function Home() {
           <label>
             Start Time (HH:MM):
             <TimePicker
-              onChange={setStartTime}
+              onChange={(value) => setStartTime(value ?? "")}
               value={startTime}
               format="HH:mm"
               hourPlaceholder="HH"
@@ -117,7 +117,7 @@ export default function Home() {
           <label>
             End Time (HH:MM):
             <TimePicker
-              onChange={setEndTime}
+              onChange={(value) => setEndTime(value ?? "")}
               value={endTime}
               format="HH:mm"
               hourPlaceholder="HH"
