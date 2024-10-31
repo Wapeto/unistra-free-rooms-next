@@ -147,6 +147,10 @@ export default function Home() {
           </li>
         ))}
       </ul>
+
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+        <p>This website is under development and is far from finished</p>
+      </div>
     </div>
   );
 }
