@@ -18,6 +18,8 @@ export default function Home() {
   const [endTime, setEndTime] = useState<string>("");
   const [freeRooms, setFreeRooms] = useState<[string, number][]>([]);
   const [buildingsList, setBuildingsList] = useState<string[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const fetchBuildings = async () => {
     const response = await fetch("/api/getBuildings");
@@ -36,7 +38,7 @@ export default function Home() {
       alert("Please select a date.");
       return;
     }
-
+    setShowLoading(true);
     const formattedDate = format(date, "dd/MM/yyyy");
 
     const response = await fetch("/api/getFreeRooms", {
@@ -55,6 +57,8 @@ export default function Home() {
     if (response.ok) {
       const data = await response.json();
       setFreeRooms(data.freeRooms);
+      setShowLoading(false);
+      setHasSearched(true);
     } else {
       const errorData = await response.json();
       alert("Error: " + errorData.error);
@@ -130,22 +134,33 @@ export default function Home() {
           </label>
         </div>
         <div className="flex flex-col items-center my-4">
-          <button
-            type="submit"
-            className="btn-gradient"
-          >
+          <button type="submit" className="btn-gradient">
             Check Availability
           </button>
         </div>
       </form>
 
       <h2>Available Rooms:</h2>
-      <ul>
-        {freeRooms.map(([name, roomId]) => (
-          <li key={roomId}>
-            Room {name} (ID: {roomId})
-          </li>
-        ))}
+      {showLoading && <p>Searching...</p>}
+      <ul className="mt-4 flex flex-row flex-wrap gap-2 max-w-[50%] justify-center">
+        {freeRooms.length === 0 && hasSearched ? (
+          <li>No rooms available</li>
+        ) : (
+          freeRooms.map(([name, roomId]) => (
+            <li
+              key={roomId}
+              className="bg-slate-800 py-2 px-2 w-fit rounded-md"
+            >
+              <a
+                href={"https://monemploidutemps.unistra.fr/public/" + roomId}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {name} (ID: {roomId})
+              </a>
+            </li>
+          ))
+        )}
       </ul>
 
       <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
