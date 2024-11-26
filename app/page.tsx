@@ -66,7 +66,7 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-slate-700 h-screen flex flex-col items-center p-4">
+    <div className="bg-slate-700 min-h-screen h-max flex flex-col items-center p-4">
       <h1 className="text-4xl m-4">Room Availability Checker</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
         <div>
@@ -142,7 +142,7 @@ export default function Home() {
 
       <h2>Available Rooms:</h2>
       {showLoading && <p>Searching...</p>}
-      <ul className="mt-4 flex flex-row flex-wrap gap-2 max-w-[50%] justify-center">
+      <ul className="mt-4 flex flex-row flex-wrap gap-2 max-w-[60%] justify-center">
         {freeRooms.length === 0 && hasSearched ? (
           <li>No rooms available</li>
         ) : (
@@ -163,7 +163,7 @@ export default function Home() {
         )}
       </ul>
 
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 mb-4">
+      <div className="pt-10 text-center">
         <p>This website is under development and is far from finished</p>
       </div>
     </div>
